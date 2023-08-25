@@ -1,14 +1,14 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const bodyparser = require('body-parser');
-// const connectDB = require('/server/database/connection');
+const connectDB = require('./database/connection');
 const cors = require("cors");
 const PMS = express();
 
-dotenv.config({path:'dot.env'});
+dotenv.config({path:'config.env'});
 const PORT = process.env.PORT||8000;
 
-// connectDB();
+connectDB();
 PMS.use(cors({
     origin: 'http://localhost:3000',
     credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
