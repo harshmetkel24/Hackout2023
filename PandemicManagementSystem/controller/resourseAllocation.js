@@ -55,10 +55,17 @@ exports.hostpitalAllocation = async (req, res) => {
                     tm = Number(rCount);
                     rCount = 0;
                 }
-                if (ans.get(hospitals[x[j].ind])) {
-                    tm += ans.get(hospitals[x[j].ind]);
+                const ob = {
+                    id: hospitals[x[j].ind]._id,
+                    name: hospitals[x[j].ind].name,
+                    address: hospitals[x[j].ind].address,
+                    color: 'red'
                 }
-                ans.set(hospitals[x[j].ind], tm);
+                if (ans.get(ob)) {
+                    tm += ans.get(ob);
+                }
+                if(tm)
+                    ans.set(ob, tm);
 
 
             }
@@ -80,7 +87,17 @@ exports.hostpitalAllocation = async (req, res) => {
                 if (ans.get(hospitals[x[j].ind])) {
                     tm += ans.get(hospitals[x[j].ind]);
                 }
-                ans.set(hospitals[x[j].ind], tm);
+                const ob = {
+                    id: hospitals[x[j].ind]._id,
+                    name: hospitals[x[j].ind].name,
+                    address: hospitals[x[j].ind].address,
+                    color: 'yellow'
+                }
+                if (ans.get(ob)) {
+                    tm += ans.get(ob);
+                }
+                if(tm)
+                    ans.set(ob, tm);
             }
 
             for (let j = 0; j < x.length && !rCount && !yCount && gCount; j++) {
@@ -101,7 +118,17 @@ exports.hostpitalAllocation = async (req, res) => {
                 if (ans.get(hospitals[x[j].ind])) {
                     tm += ans.get(hospitals[x[j].ind]);
                 }
-                ans.set(hospitals[x[j].ind], tm);
+                const ob = {
+                    id: hospitals[x[j].ind]._id,
+                    name: hospitals[x[j].ind].name,
+                    address: hospitals[x[j].ind].address,
+                    color: 'green'
+                }
+                if (ans.get(ob)) {
+                    tm += ans.get(ob);
+                }
+                if(tm)
+                    ans.set(ob, tm);
             }
 
             // for (let j = 0; j < x.length; j++) {
@@ -117,8 +144,13 @@ exports.hostpitalAllocation = async (req, res) => {
             // }
 
         }
-
-        await res.status(200).json(Object.fromEntries(ans));
+        console.log(Object.fromEntries(ans));
+        const fun = [];
+        await ans.forEach(async (k,v)=>{
+            await fun.push({hospital: v,count: k});
+        })
+        console.log(fun);
+        await res.status(200).json(fun);
 
 
     } catch (err) {
