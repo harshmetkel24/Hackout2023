@@ -4,39 +4,43 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { UserContext } from '../UserContext';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function MyNavbar(){
+export default function MyNavbar() {
 
-    const {user,setUser} = useContext(UserContext);
-    const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
-    const handleLogOut = () => {
-        setUser({});
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        navigate('/');
-    }
+  const handleLogOut = () => {
+    setUser({});
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    navigate('/');
+  }
 
-    return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+  return (
+    <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Link to="/" style={{textDecoration:'none'}}>
+          <Navbar.Brand>PMS</Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+          <Link to ={'/allocation'} style={{textDecoration:"none"}}>
+            <Nav.Link href="/allocation"  >Allocation</Nav.Link>
+          </Link>
             {
-                user.userName && (
-                    <Nav.Link onClick={()=>handleLogOut()}>LogOut</Nav.Link>
-                )
+              user.userName && (
+                <Nav.Link onClick={() => handleLogOut()}>LogOut</Nav.Link>
+              )
             }
             {
-                !user.userName && (
-                    <Nav.Link href="/login">Login</Nav.Link>
-                )
+              !user.userName && (
+               <Link to="/login" style={{textDecoration:'none'}}> <Nav.Link href={'/login'}>Login</Nav.Link></Link>
+              )
             }
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action
@@ -46,10 +50,10 @@ export default function MyNavbar(){
               <NavDropdown.Item href="#action/3.4">
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    );
+  );
 }

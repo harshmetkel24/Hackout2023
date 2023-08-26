@@ -1,6 +1,6 @@
 import Layout from "./Layout";
 import { Route, Routes } from "react-router-dom";
-import { HomePage, LoginPage } from "./pages";
+import { HomePage, LoginPage, AllocationPage } from "./pages";
 import { UserContextProvider } from "./UserContext";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path='/allocation' element={<AllocationPage />} />
           {/* <Route path="/signup" element={<SignupPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/myproblems" element={<MyProblemsPage />} />
