@@ -31,4 +31,6 @@ route.put("/update/lab/:id", labController.updateLab);
 
 route.get("/get/labs", labController.getAllLabs);
 
+route.post("/labsAllocation", labController.labsAllocation);
+
 module.exports = route;
