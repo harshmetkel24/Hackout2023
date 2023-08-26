@@ -54,6 +54,9 @@ const labSchema = new Schema({
         longitude: { type: Number, required: true },
         latitude: { type: Number, required: true },
     },
+    capacity:{
+        type:Number, required: true,
+    }
 });
 
 const hospital = mongoose.model("hospital", hospitalSchema);

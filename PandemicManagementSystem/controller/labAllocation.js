@@ -1,6 +1,6 @@
-var { User, hospital } = require('../model/model');
+var { lab } = require('../model/model');
 
-exports.hostpitalAllocation = async (req, res) => {
+exports.labsAllocation = async (req, res) => {
     if (!req.body) {
         res.status(400).json({ message: "Content can not be empty!" });
         return;
@@ -14,7 +14,7 @@ exports.hostpitalAllocation = async (req, res) => {
         const log = req.body.log;
         const lat = req.body.lat;
 
-        const hospitals = await hospital.find();
+        const labs = await lab.find();
 
         const profile = "driving";
 
@@ -24,7 +24,8 @@ exports.hostpitalAllocation = async (req, res) => {
             // console.log(rCount, yCount, gCount);
             let x = [];
             for (let ind = 0; ind < hospitals.length; ind++) {
-                if (hospitals[ind].capacity - hospitals[ind].count.patient < 1) {
+                const total = labs[ind].cntSample.red + labs[ind].cntSample.yellow + labs[ind].cntSample.green;
+                if (labs[ind].capacity - total < 1) {
                     continue;
                 }
                 const apiUrl = `https://api.mapbox.com/directions/v5/mapbox/${profile}/${log},${lat};${hospitals[ind].coordinate.longitude},${hospitals[ind].coordinate.latitude}?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`;
@@ -42,66 +43,66 @@ exports.hostpitalAllocation = async (req, res) => {
                 return a.dur - b.dur;
             });
             for (let j = 0; j < x.length && rCount; j++) {
-                const dif = Number(hospitals[x[j].ind].capacity - hospitals[x[j].ind].count.patient);
+                const total = labs[x[j].ind].cntSample.red + labs[x[j].ind].cntSample.yellow + labs[x[j].ind].cntSample.green;
+                const dif = Number(labs[x[j].ind].capacity - total);
                 let tm = 0;
                 if (rCount > dif) {
                     rCount -= dif;
                     tm = dif;
-                    hospitals[x[j].ind].count.patient = hospitals[x[j].ind].capacity;
+                    labs[x[j].ind].cntSample.red += dif;
                 }
                 else {
                     // hospitals[x[j].ind].count.patient += ( hospitals[x[j].ind].capacity - rCount);
-                    hospitals[x[j].ind].count.patient += Number(rCount);
+                    labs[x[j].ind].cntSample.red += Number(rCount);
                     tm = Number(rCount);
                     rCount = 0;
                 }
-                if (ans.get(hospitals[x[j].ind])) {
-                    tm += ans.get(hospitals[x[j].ind]);
+                if (ans.get(labs[x[j].ind])) {
+                    tm += ans.get(labs[x[j].ind]);
                 }
-                ans.set(hospitals[x[j].ind], tm);
-
-
+                ans.set(labs[x[j].ind], tm);
             }
 
             for (let j = 0; j < x.length && !rCount && yCount; j++) {
-                const dif = Number(hospitals[x[j].ind].capacity - hospitals[x[j].ind].count.patient);
+                const total = labs[x[j].ind].cntSample.red + labs[x[j].ind].cntSample.yellow + labs[x[j].ind].cntSample.green;
+                const dif = Number(labs[x[j].ind].capacity - total);
                 let tm = 0;
                 if (yCount > dif) {
                     yCount -= dif;
                     tm = dif;
-                    hospitals[x[j].ind].count.patient = hospitals[x[j].ind].capacity;
+                    labs[x[j].ind].cntSample.yellow += dif;
                 }
                 else {
                     // hospitals[x[j].ind].count.patient += ( hospitals[x[j].ind].capacity - yCount);\
-                    hospitals[x[j].ind].count.patient += Number(yCount);
+                    labs[x[j].ind].cntSample.yellow += Number(yCount);
                     tm = Number(yCount);
                     yCount = 0;
                 }
-                if (ans.get(hospitals[x[j].ind])) {
-                    tm += ans.get(hospitals[x[j].ind]);
+                if (ans.get(labs[x[j].ind])) {
+                    tm += ans.get(labs[x[j].ind]);
                 }
-                ans.set(hospitals[x[j].ind], tm);
+                ans.set(labs[x[j].ind], tm);
             }
 
             for (let j = 0; j < x.length && !rCount && !yCount && gCount; j++) {
-                const dif = Number(hospitals[x[j].ind].capacity - hospitals[x[j].ind].count.patient);
+                const total = labs[x[j].ind].cntSample.red + labs[x[j].ind].cntSample.yellow + labs[x[j].ind].cntSample.green;
+                const dif = Number(labs[x[j].ind].capacity - total);
                 let tm = 0;
-
                 if (gCount > dif) {
                     gCount -= dif;
                     tm = dif;
-                    hospitals[x[j].ind].count.patient = hospitals[x[j].ind].capacity;
+                    labs[x[j].ind].cntSample.green += dif;
                 }
                 else {
                     // hospitals[x[j].ind].count.patient += ( hospitals[x[j].ind].capacity - gCount);
-                    hospitals[x[j].ind].count.patient += Number(gCount);
+                    labs[x[j].ind].cntSample.green += Number(gCount);
                     tm = Number(gCount);
                     gCount = 0;
                 }
-                if (ans.get(hospitals[x[j].ind])) {
-                    tm += ans.get(hospitals[x[j].ind]);
+                if (ans.get(labs[x[j].ind])) {
+                    tm += ans.get(labs[x[j].ind]);
                 }
-                ans.set(hospitals[x[j].ind], tm);
+                ans.set(labs[x[j].ind], tm);
             }
 
             // for (let j = 0; j < x.length; j++) {
