@@ -40,4 +40,21 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+  <script>
+    window.botpressWebChat.init({
+      composerPlaceholder: "Chat with My Doctor",
+      botConversationDescription:
+        "This chatbot was built surprisingly fast with Botpress",
+      botId: "9f703533-ce24-44eb-bfd8-e260b7b96f2d",
+      hostUrl: "https://cdn.botpress.cloud/webchat/v1",
+      messagingUrl: "https://messaging.botpress.cloud",
+      clientId: "9f703533-ce24-44eb-bfd8-e260b7b96f2d",
+      lazySocket: true,
+      botName: "My Doctor",
+      avatarUrl:
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.eleviant.com%2Fgo-digital%2Fvchat%2Fhealthcare-bot-demo%2F&psig=AOvVaw0iIRylOQwUevjOajDzMpXL&ust=1693131171068000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCLCJxK2L-oADFQAAAAAdAAAAABAD",
+      showPoweredBy: true,
+    });
+  </script>
 </html>
