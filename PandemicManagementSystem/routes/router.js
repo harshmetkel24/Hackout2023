@@ -1,17 +1,34 @@
-const express = require('express');
+const express = require("express");
 const route = express.Router();
 
-const controller = require('../controller/controller');
-const resourseAllocation = require('../controller/resourseAllocation');
+const controller = require("../controller/controller");
 
-const verify = require('../controller/verifytoken');
+const resourseAllocation = require("../controller/resourseAllocation");
 
+const verify = require("../controller/verifytoken");
 
-route.post('/login', controller.login);
+const workforceController = require("../controller/workforceAllocation");
 
-route.post('/add/user', controller.addUser);
+const labController = require("../controller/labAllocation");
 
-route.post('/hostpitalAllocation', resourseAllocation.hostpitalAllocation);
+route.post("/login", controller.login);
 
+route.post("/add/user", controller.addUser);
 
-module.exports = route
+route.post("/hostpitalAllocation", resourseAllocation.hostpitalAllocation);
+
+// hospital related routes
+route.post("/add/hospital", workforceController.createHosptal);
+
+route.get("/get/hospitals", workforceController.getHospitals);
+
+route.patch("/update/hospitals", workforceController.updateHospitals);
+
+// lab related routes
+route.post("/add/lab", labController.createLab);
+
+route.put("/update/lab/:id", labController.updateLab);
+
+route.get("/get/labs", labController.getAllLabs);
+
+module.exports = route;
