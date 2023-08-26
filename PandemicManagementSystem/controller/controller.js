@@ -1,4 +1,4 @@
-var { User, hospital, Lab } = require('../model/model');
+var { User, hospital, Lab, Medical } = require('../model/model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -45,6 +45,21 @@ exports.login = async (req, res) => {
         }
         else if (role === 'Lab_O') {
             Lab.findOne({ loginId: username })
+                .then(async (data) => {
+                    const compare = await bcrypt.compareSync(password, data.password);
+                    if (!data || !compare) {
+                        res.status(404).send({ message: "Not found user.", success: false });
+                        return;
+                    }
+                    else {
+                        const token = jwt.sign({ username: username, role: data.role }, process.env.TOKEN_SECRET);
+                        res.status(200).json({ message: "Login successfully",token: token, success: true });
+
+                    }
+                })
+        }
+        else if(role === 'Chemist'){
+            Medical.findOne({ loginId: username })
                 .then(async (data) => {
                     const compare = await bcrypt.compareSync(password, data.password);
                     if (!data || !compare) {
