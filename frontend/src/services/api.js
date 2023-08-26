@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URI = "http://127.0.0.1:8000";
+const API_URI = "https://pms-hackout23.onrender.com";
 // const API_URI = "https://onlinejudge-ewmi.onrender.com";
 
 export const Login = async (data) => {
