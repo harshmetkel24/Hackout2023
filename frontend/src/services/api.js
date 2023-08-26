@@ -5,7 +5,7 @@ const API_URI = "http://127.0.0.1:8000";
 
 export const Login = async (data) => {
     try {
-        const response = await axios.post(`${API_URI}/login`,data,{ withCredentials: true });
+        const response = await axios.post(`${API_URI}/login`,data,{ withCredentials: true});
         return response.data;
     } catch (error) {
         console.log('Error while login', error.message);

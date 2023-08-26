@@ -1,28 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Login } from "../../services/api";
-// import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { UserContext } from "../../UserContext";
 
 export default function LoginPage(){
-    // const navigate = useNavigate();
-    const [email,setEmail] = useState('');
+    const navigate = useNavigate();
+    const [userName,setUserName] = useState('');
     const [pass,setPassword] = useState('');
     const [role,setRole] = useState('');
+    const {user,setUser} = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(email && pass && role){
+        if(userName && pass && role){
             const data = {
-              email: email,
+              username: userName,
               password: pass,
               role,
             }
             const { success, message, token } = await Login(data);
-            setEmail('');
+            if(success){
+                localStorage.setItem('token', JSON.stringify(token));
+                const obj = {
+                    userName:userName,
+                    role:role                    
+                }
+                localStorage.setItem('user', JSON.stringify(obj));
+                console.log(obj);
+                setUser(obj);
+                console.log(user);
+                handleSuccess(message);
+                navigate('/');
+            }
+            else{
+                handleError(message);
+            }
+            setUserName('');
             setPassword('');
             setRole('');
         }
     }
+
+    const handleError = (err) =>
+        toast.error(err, {
+        position: "bottom-left",
+    });
+    const handleSuccess = (msg) =>
+        toast.success(msg, {
+        position: "bottom-left",
+    });
 
     return (
         <div className="mt-20 flex items-center justify-center">
@@ -30,13 +57,13 @@ export default function LoginPage(){
                 <h2>Login Account</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">User Name</label>
                     <input
-                        type="email"
-                        name="email"
-                        value={email}
+                        type="text"
+                        name="text"
+                        value={userName}
                         placeholder="Enter your email"
-                        onChange={(ev)=>setEmail(ev.target.value)}
+                        onChange={(ev)=>setUserName(ev.target.value)}
                     />
                     </div>
                     <div>
@@ -52,9 +79,9 @@ export default function LoginPage(){
                     <input
                         type="radio"
                         name="role"
-                        value='admin'
-                        checked={role === 'admin'}
-                        id="admin"
+                        value='Admin'
+                        checked={role === 'Admin'}
+                        id="Admin"
                         onChange={(ev)=>setRole(ev.target.value)}
                     />
                     <label for="admin">Admin</label>
@@ -88,7 +115,7 @@ export default function LoginPage(){
                     </div>
                     <button type="submit">Submit</button>
                 </form>
-                {/* <ToastContainer /> */}
+                <ToastContainer />
             </div>
         </div>
     );

@@ -1,9 +1,23 @@
+import { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { UserContext } from '../UserContext';
+import { useNavigate } from "react-router-dom";
 
 export default function MyNavbar(){
+
+    const {user,setUser} = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const handleLogOut = () => {
+        setUser({});
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        navigate('/');
+    }
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -12,7 +26,16 @@ export default function MyNavbar(){
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            {
+                user.userName && (
+                    <Nav.Link onClick={()=>handleLogOut()}>LogOut</Nav.Link>
+                )
+            }
+            {
+                !user.userName && (
+                    <Nav.Link href="/login">Login</Nav.Link>
+                )
+            }
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
