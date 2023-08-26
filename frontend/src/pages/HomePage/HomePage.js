@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { DetailForm } from "../../components";
-import { allocateResources } from "../../services/api";
+import { allocateResources, allocateLabs } from "../../services/api";
 
 export default function HomePage() {
   useEffect(() => {
@@ -9,9 +9,13 @@ export default function HomePage() {
   return (
     <>
       <div className="container-fluid vh-100">
-        <DetailForm
+        {/* <DetailForm
           formTitle={"Report Casuality"}
           handleSubmit={allocateResources}
+        /> */}
+        <DetailForm
+          formTitle={"Labs Allocation"}
+          handleSubmit={allocateLabs}
         />
       </div>
     </>

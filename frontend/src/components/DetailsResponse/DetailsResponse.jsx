@@ -1,9 +1,10 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 
-function DetailsResponse() {
+function DetailsResponse({ responseDetail }) {
+  console.log(responseDetail);
   return (
-    <div className="container w-50">
+    <div className="container w-100">
       <Table
         striped
         bordered
@@ -20,24 +21,21 @@ function DetailsResponse() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>John</td>
-            <td>USA</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>John</td>
-            <td>USA</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>John</td>
-            <td>USA</td>
-            <td>1</td>
-          </tr>
+          {responseDetail.length === 0 && (
+            <tr >
+              <td colSpan="4" className="text-center">
+                No Data
+              </td>
+            </tr>
+          )}
+          {responseDetail.length && responseDetail.map((detail, index) => (
+            <tr style={{backgroundColor: detail.data.color}} key={index}>
+              <td>{index + 1}</td>
+              <td>{detail.data.name}</td>
+              <td>{detail.data.address}</td>
+              <td>{detail.count}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>

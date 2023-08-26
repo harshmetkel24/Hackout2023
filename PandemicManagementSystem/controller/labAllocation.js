@@ -150,7 +150,7 @@ exports.labsAllocation = async (req, res) => {
     }
     const fun = [];
     await ans.forEach(async (k, v) => {
-      await fun.push({ lab: v, count: k });
+      await fun.push({ data: v, count: k });
     })
     await res.status(200).json(fun);
   } catch (err) {

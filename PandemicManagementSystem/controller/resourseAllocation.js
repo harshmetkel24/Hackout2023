@@ -146,7 +146,7 @@ exports.hostpitalAllocation = async (req, res) => {
         }
         const fun = [];
         await ans.forEach(async (k,v)=>{
-            await fun.push({hospital: v,count: k});
+            await fun.push({data: v,count: k});
         })
         console.log(fun);
         await res.status(200).json(fun);

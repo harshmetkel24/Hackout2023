@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URI = "https://pms-hackout23.onrender.com";
-// const API_URI = "https://onlinejudge-ewmi.onrender.com";
+// const API_URI = "https://pms-hackout23.onrender.com";
+const API_URI = "http://localhost:8000";
 
 export const Login = async (data) => {
   try {
@@ -16,7 +16,6 @@ export const Login = async (data) => {
 
 export const allocateResources = async (event, data) => {
   event.preventDefault();
-  console.log("form data", data);
   const reqData = {
     rCount: data.redCount,
     yCount: data.yellowCount,
@@ -34,8 +33,29 @@ export const allocateResources = async (event, data) => {
     );
 
     console.log(response);
-    return response.data;
+    const response2 = await axios.patch(`${API_URI}/update/hospitals`, { withCredentials: true });
+    return { data: response.data, error: null };
   } catch (error) {
-    console.log("Error while allocating resources", error.message);
+    return { data: null, error: error.message };
   }
 };
+
+export const allocateLabs = async (event, data) => {
+  event.preventDefault();
+  const reqData = {
+    rCount: data.redCount,
+    yCount: data.yellowCount,
+    gCount: data.greenCount,
+    log: data.longitude,
+    lat: data.latitude,
+  };
+
+  try {
+    const response = await axios.post(`${API_URI}/labsAllocation`, reqData, {
+      withCredentials: true,
+    });
+    return { data: response.data, error: null };
+  } catch (error) {
+    return { data: null, error: error.message };
+  }
+}

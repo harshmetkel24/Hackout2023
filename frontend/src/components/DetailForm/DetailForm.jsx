@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import DetailResponse from "../DetailsResponse/DetailsResponse.jsx";
 
+
 function DetailForm({ formTitle, handleSubmit }) {
   const [detail, setDetail] = useState({
     redCount: 0,
@@ -15,11 +16,17 @@ function DetailForm({ formTitle, handleSubmit }) {
   const [responseDetail, setResponseDetail] = useState(null);
 
   return (
-    <div className="container rounded bg-secondary p-3 w-25">
+    <div className='container rounded bg-secondary p-3 w-50'>
       <h2 className="text-light text-center">{formTitle}</h2>
-      <Form
-        onSubmit={(event) => {
-          setResponseDetail(handleSubmit(event, detail));
+
+      {!responseDetail && (<Form
+        onSubmit={async (event) => {
+
+          const data = await handleSubmit(event, detail);
+          if (data.data)
+            setResponseDetail(data.data);
+          else
+            alert('Something Went Wrong!')
         }}
       >
         <Form.Group className="mb-3" controlId="formRedCount">
@@ -78,9 +85,9 @@ function DetailForm({ formTitle, handleSubmit }) {
         <Button variant="primary" type="submit">
           Submit
         </Button>
-      </Form>
+      </Form>)}
 
-      {responseDetail && <DetailResponse />}
+      {responseDetail && <DetailResponse responseDetail={responseDetail} />}
     </div>
   );
 }
