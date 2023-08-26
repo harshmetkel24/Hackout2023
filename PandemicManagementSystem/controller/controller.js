@@ -70,7 +70,7 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.addUser = (req, res) => {
+exports.addUser = async (req, res) => {
 
     if (!req.body) {
         res.status(400).json({ message: "Content can not be empty!" });
@@ -82,9 +82,10 @@ exports.addUser = (req, res) => {
         const user = new User({
             username: req.body.username,
             password: bcrypt.hashSync(req.body.password, 10),
+            role:"MO",
         })
 
-        user
+        await user
             .save(user)
             .then(data => {
                 const token = jwt.sign({ username: req.body.username, role: "user" }, process.env.TOKEN_SECRET);
@@ -101,3 +102,36 @@ exports.addUser = (req, res) => {
 
     }
 };
+
+
+exports.addAdmin = async (req,res) => {
+    if (!req.body) {
+        res.status(400).json({ message: "Content can not be empty!" });
+        return;
+    }
+
+    try {
+
+        const user = new User({
+            username: req.body.username,
+            password: bcrypt.hashSync(req.body.password, 10),
+            role:"Admin",
+        })
+
+        await user
+            .save(user)
+            .then(data => {
+                const token = jwt.sign({ username: req.body.username, role: "user" }, process.env.TOKEN_SECRET);
+                res.status(200).json({ token: token });
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occured while creating a create operation"
+                });
+            });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+
+    }
+}

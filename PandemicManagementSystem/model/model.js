@@ -73,14 +73,11 @@ const medicalSchema = new Schema({
   password: {
     type: String, required: true,
   },
-  medicine: {
-    type: [{
-      id: { type: String, required: true, unique: true },
-      name: { type: String, required: true },
-      count: { type: String, required: true },
-    }],
-    required: true,
-  },
+  medicine: [{
+    id: { type: String, required: true },
+    name: { type: String, required: true },
+    count: { type: String, required: true },
+  }],
   coordinate: {
     longitude: { type: Number, required: true },
     latitude: { type: Number, required: true },

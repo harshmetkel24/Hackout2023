@@ -12,10 +12,13 @@ const workforceController = require("../controller/workforceAllocation");
 const labController = require("../controller/labAllocation");
 
 const publicController = require("../controller/publicController");
+const medicineAllocation = require("../controller/medicineAllocation");
 
 route.post("/login", controller.login);
 
 route.post("/add/user", controller.addUser);
+
+route.post("/add/admin", controller.addAdmin);
 
 route.post("/hostpitalAllocation", resourseAllocation.hostpitalAllocation);
 
@@ -26,6 +29,9 @@ route.get("/get/hospitals", workforceController.getHospitals);
 
 route.patch("/update/hospitals", workforceController.updateHospitals);
 
+route.post("/get/nearHospitals", publicController.nearHospitals);
+
+
 // lab related routes
 route.post("/add/lab", labController.createLab);
 
@@ -35,6 +41,9 @@ route.get("/get/labs", labController.getAllLabs);
 
 route.post("/labsAllocation", labController.labsAllocation);
 
-route.post("/get/nearHospitals", publicController.nearHospitals);
+// Medical related routes
+route.post("/add/medical", medicineAllocation.addMedical);
+
+route.post("/medicineAllocation", medicineAllocation.medicineAllocation);
 
 module.exports = route;
