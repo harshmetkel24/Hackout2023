@@ -11,6 +11,8 @@ const workforceController = require("../controller/workforceAllocation");
 
 const labController = require("../controller/labAllocation");
 
+const publicController = require("../controller/publicController");
+
 route.post("/login", controller.login);
 
 route.post("/add/user", controller.addUser);
@@ -32,5 +34,7 @@ route.put("/update/lab/:id", labController.updateLab);
 route.get("/get/labs", labController.getAllLabs);
 
 route.post("/labsAllocation", labController.labsAllocation);
+
+route.post("/get/nearHospitals", publicController.nearHospitals);
 
 module.exports = route;

@@ -60,7 +60,37 @@ const labSchema = new Schema({
   },
 });
 
+const medicalSchema = new Schema({
+  name: {
+    type: String, required: true,
+  },
+  address: {
+    type: String, required: true,
+  },
+  loginId: {
+    type: String, required: true,
+  },
+  password: {
+    type: String, required: true,
+  },
+  medicine: {
+    type: [{
+      id: { type: String, required: true, unique: true },
+      name: { type: String, required: true },
+      count: { type: String, required: true },
+    }],
+    required: true,
+  },
+  coordinate: {
+    longitude: { type: Number, required: true },
+    latitude: { type: Number, required: true },
+  },
+
+});
+
 const hospital = mongoose.model("hospital", hospitalSchema);
 const Lab = mongoose.model("lab", labSchema);
+const Medical = mongoose.model("medical", medicalSchema);
 
-module.exports = { User, hospital, Lab };
+
+module.exports = { User, hospital, Lab, Medical };
