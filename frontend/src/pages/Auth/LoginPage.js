@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Login } from "../../services/api";
 // import { ToastContainer, toast } from "react-toastify";
-// import { Login } from "../services/api";
 
 export default function LoginPage(){
     // const navigate = useNavigate();
