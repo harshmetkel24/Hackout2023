@@ -1,7 +1,8 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
-function DetailsResponse({ responseDetail }) {
+function DetailsResponse({ responseDetail,close }) {
   console.log(responseDetail);
   return (
     <div className="container w-100">
@@ -38,6 +39,13 @@ function DetailsResponse({ responseDetail }) {
           ))}
         </tbody>
       </Table>
+      {
+          close && (
+            <Button variant="danger" onClick={()=>close(false)}>
+              Back
+            </Button>
+          )
+        }
     </div>
   );
 }

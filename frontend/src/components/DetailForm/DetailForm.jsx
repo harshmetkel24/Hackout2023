@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import DetailResponse from "../DetailsResponse/DetailsResponse.jsx";
 
 
-function DetailForm({ formTitle, handleSubmit }) {
+function DetailForm({ formTitle, handleSubmit, close1 }) {
   const [detail, setDetail] = useState({
     redCount: 0,
     yellowCount: 0,
@@ -13,7 +13,20 @@ function DetailForm({ formTitle, handleSubmit }) {
     latitude: 0,
   });
 
+
   const [responseDetail, setResponseDetail] = useState(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setDetail({...detail, longitude: position.coords.longitude, latitude: position.coords.latitude});
+      },
+      (error) => {
+        alert(error.message);
+      }
+    );
+  }, []);
+
 
   return (
     <div className='container rounded bg-secondary p-3 w-50'>
@@ -60,34 +73,21 @@ function DetailForm({ formTitle, handleSubmit }) {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formLongitude">
-          <Form.Label className="text-light">Longitude</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Enter Longitude"
-            onChange={(e) =>
-              setDetail({ ...detail, longitude: e.target.value })
-            }
-            step="any"
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formLatitude">
-          <Form.Label className="text-light">Latitude</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Enter Latitude"
-            onChange={(e) => setDetail({ ...detail, latitude: e.target.value })}
-            step="any"
-          />
-        </Form.Group>
+      
 
         <Button variant="primary" type="submit">
           Submit
         </Button>
+        {
+          close1 && (
+            <Button variant="danger" onClick={()=>close1(false)}>
+              Back
+            </Button>
+          )
+        }
       </Form>)}
 
-      {responseDetail && <DetailResponse responseDetail={responseDetail} />}
+      {responseDetail && <DetailResponse responseDetail={responseDetail} close={close1} />}
     </div>
   );
 }
