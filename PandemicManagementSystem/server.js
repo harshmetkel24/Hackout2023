@@ -10,7 +10,7 @@ const PORT = process.env.PORT||8000;
 
 connectDB();
 PMS.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://hackout2023.vercel.app/',
     credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
 }))
 
