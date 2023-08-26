@@ -1,5 +1,5 @@
 import MyNavbar from "./Navbar";
 import DetailForm from "./DetailForm/DetailForm";
-import DetailsResponse from "./DetailsResponse/DetailsResponse";
+import { AllocationPage } from "../pages";
 
-export { MyNavbar, DetailForm, DetailsResponse };
+export { MyNavbar, DetailForm, AllocationPage };

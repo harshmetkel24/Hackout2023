@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import DetailResponse from "../DetailsResponse/DetailsResponse.jsx";
 
-function DetailForm({ formTitle }) {
+function DetailForm({ formTitle, handleSubmit }) {
   const [detail, setDetail] = useState({
     redCount: 0,
     yellowCount: 0,
@@ -11,22 +12,16 @@ function DetailForm({ formTitle }) {
     latitude: 0,
   });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(detail);
-    setDetail({
-      redCount: 0,
-      yellowCount: 0,
-      greenCount: 0,
-      longitude: 0,
-      latitude: 0,
-    });
-  }
+  const [responseDetail, setResponseDetail] = useState(null);
 
   return (
     <div className="container rounded bg-secondary p-3 w-25">
       <h2 className="text-light text-center">{formTitle}</h2>
-      <Form onSubmit={handleSubmit}>
+      <Form
+        onSubmit={(event) => {
+          setResponseDetail(handleSubmit(event, detail));
+        }}
+      >
         <Form.Group className="mb-3" controlId="formRedCount">
           <Form.Label className="text-light">Red Count</Form.Label>
           <Form.Control
@@ -84,6 +79,8 @@ function DetailForm({ formTitle }) {
           Submit
         </Button>
       </Form>
+
+      {responseDetail && <DetailResponse />}
     </div>
   );
 }
