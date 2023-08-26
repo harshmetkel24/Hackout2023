@@ -1,17 +1,17 @@
 const express = require('express');
 const route = express.Router();
 
-const services = require('../services/render')
 const controller = require('../controller/controller');
+const resourseAllocation = require('../controller/resourseAllocation');
+
 const verify = require('../controller/verifytoken');
 
 
-route.get('/', services.homeRoutes);
-
 route.post('/login', controller.login);
 
-route.post('/addUser', controller.addUser);
+route.post('/add/user', controller.addUser);
 
-route.get('/hostpitalAllocation', verify, controller.hostpitalAllocation);
+route.post('/hostpitalAllocation', resourseAllocation.hostpitalAllocation);
+
 
 module.exports = route

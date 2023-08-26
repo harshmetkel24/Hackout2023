@@ -62,7 +62,3 @@ exports.addUser = (req, res) => {
 
     }
 };
-
-exports.hostpitalAllocation = async (req, res) => {
-
-}
