@@ -15,7 +15,7 @@ exports.labsAllocation = async (req, res) => {
     const log = req.body.log;
     const lat = req.body.lat;
 
-    const labs = await lab.find();
+    const labs = await Lab.find();
 
     const profile = "driving";
 
@@ -24,7 +24,7 @@ exports.labsAllocation = async (req, res) => {
     for (let i = 30; rCount || yCount || gCount; i += 15) {
       // console.log(rCount, yCount, gCount);
       let x = [];
-      for (let ind = 0; ind < hospitals.length; ind++) {
+      for (let ind = 0; ind < labs.length; ind++) {
         const total =
           labs[ind].cntSample.red +
           labs[ind].cntSample.yellow +
@@ -32,7 +32,7 @@ exports.labsAllocation = async (req, res) => {
         if (labs[ind].capacity - total < 1) {
           continue;
         }
-        const apiUrl = `https://api.mapbox.com/directions/v5/mapbox/${profile}/${log},${lat};${hospitals[ind].coordinate.longitude},${hospitals[ind].coordinate.latitude}?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`;
+        const apiUrl = `https://api.mapbox.com/directions/v5/mapbox/${profile}/${log},${lat};${labs[ind].coordinate.longitude},${labs[ind].coordinate.latitude}?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`;
         await fetch(apiUrl)
           .then((response) => response.json())
           .then((data) => {
@@ -127,9 +127,10 @@ exports.labsAllocation = async (req, res) => {
       //         })
       // }
     }
-
+    console.log(ans);
     await res.status(200).json(Object.fromEntries(ans));
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 };
