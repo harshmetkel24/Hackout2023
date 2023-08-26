@@ -144,7 +144,6 @@ exports.hostpitalAllocation = async (req, res) => {
             // }
 
         }
-        console.log(Object.fromEntries(ans));
         const fun = [];
         await ans.forEach(async (k,v)=>{
             await fun.push({hospital: v,count: k});
