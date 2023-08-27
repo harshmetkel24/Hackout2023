@@ -33,6 +33,27 @@ export default function MyNavbar() {
             </Link>
           )
         }
+        {
+          user && (user.role === "Admin") && (
+            <Link to='/addhospital' className='text-dark' style={{ textDecoration: 'none', }}>
+              <Nav.Link href="/addhospital" style={{ fontSize: '1em', fontWeight: 400 }}>Add Hospital</Nav.Link>
+            </Link>
+          )
+        }
+        {
+          user && (user.role === "Admin") && (
+            <Link to='/addlab' className='text-dark mx-4' style={{ textDecoration: 'none', }}>
+              <Nav.Link href="/addlab" style={{ fontSize: '1em', fontWeight: 400 }}>Add Laboratory</Nav.Link>
+            </Link>
+          )
+        }
+        {
+          user && (user.role === "Admin") && (
+            <Link to='/addmedical' className='text-dark' style={{ textDecoration: 'none', }}>
+              <Nav.Link href="/addmedical" style={{ fontSize: '1em', fontWeight: 400 }}>Add Medical Store</Nav.Link>
+            </Link>
+          )
+        }
         <Navbar.Collapse className="justify-content-end">
           {
             user && (

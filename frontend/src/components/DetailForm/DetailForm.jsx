@@ -29,7 +29,8 @@ function DetailForm({ formTitle, handleSubmit, close1 }) {
 
 
   return (
-    <div className='container rounded bg-secondary p-3 w-50'>
+   <div className="container-fluid py-5">
+     <div className='container rounded p-4' style={{ backgroundColor: "#333", width: "40%" }}>
       <h2 className="text-light text-center">{formTitle}</h2>
 
       {!responseDetail && (<Form
@@ -75,20 +76,23 @@ function DetailForm({ formTitle, handleSubmit, close1 }) {
 
       
 
-        <Button variant="primary" type="submit">
+       <div className="d-flex justify-content-between">
+       <Button variant="primary" type="submit">
           Submit
         </Button>
         {
           close1 && (
-            <Button variant="danger" onClick={()=>close1(false)}>
+            <Button variant="warning" onClick={()=>close1(false)}>
               Back
             </Button>
           )
         }
+       </div>
       </Form>)}
 
       {responseDetail && <DetailResponse responseDetail={responseDetail} close={close1} />}
     </div>
+   </div>
   );
 }
 

@@ -98,3 +98,51 @@ export const getAllHospitals = async () => {
     console.log('Error while getting list', error.message);
   }
 }
+
+export const addMedicalCenter = async (data) => {
+  try {
+    console.log(data);
+    const response = await axios.post(`${API_URI}/add/medical`, data, { withCredentials: true });
+    return { data: response.data, error: null };
+  } catch (error) {
+    return { data: null, error: error.message }
+  }
+}
+
+export const addLaboratory = async (data) => {
+  try {
+    const response = await axios.post(`${API_URI}/add/lab`, data, { withCredentials: true });
+    return { data: response.data, error: null };
+  } catch (error) {
+    return { data: null, error: error.message };
+  }
+}
+
+export const addHospitals = async (data) => {
+  try {
+    console.log(data);
+    const response = await axios.post(`${API_URI}/add/hospital`, data, { withCredentials: true });
+    console.log(response);
+    return { data: response.data, error: null };
+  } catch (error) {
+    return { data: null, error: error.message };
+  }
+}
+
+export const graph1 = async () => {
+  try {
+    const response = await axios.get(`${API_URI}/get/topHospitals`);
+    return response.data;
+  } catch (error) {
+    console.log('Error while getting list', error.message);
+  }
+}
+
+export const graph2 = async () => {
+  try {
+    const response = await axios.get(`${API_URI}/get/getPatient`);
+    return response.data;
+  } catch (error) {
+    console.log('Error while getting list', error.message);
+  }
+}
