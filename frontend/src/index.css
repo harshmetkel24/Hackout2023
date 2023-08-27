@@ -1,69 +1,20 @@
-*,::before,::after{
+@import url('https://fonts.googleapis.com/css2?family=Barlow&family=Nunito:wght@200;300;400;500;600;700&family=PT+Sans:@1&display=swap');
+
+*,
+::before,
+::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: 'Barlow', sans-serif;
+  font-family: 'Nunito', sans-serif;
+  font-family: 'PT Sans', sans-serif;
 }
 
-label {
-  font-size: 1.2rem;
-  color: #656262;
-}
-
-body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.form_container {
-  background-color: #fff;
-  padding: 2rem 3rem;
-  border-radius: 0.5rem;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-}
-
-.form_container > h2 {
-  margin-block: 1rem;
-  padding-block: 0.6rem;
-  color: gray;
-}
-
-.form_container > form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-}
-
-.form_container div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.form_container input {
-  border: none;
-  padding: 0.5rem;
-  border-bottom: 1px solid rgb(47, 47, 66);
-  font-size: 1.1rem;
-  outline: none;
-}
-
-.form_container input::placeholder {
-  font-size: 0.9rem;
-  font-style: italic;
-}
-
-.form_container button {
-  background-color: rgb(47, 47, 66);
-  color: #fff;
-  border: none;
-  padding: 0.6rem;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 0.3rem;
-}
-
-span a {
-  text-decoration: none;
-  color: rgb(47, 47, 66);
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  /* Adjust this value to control the roundness of the border */
+  overflow: hidden;
 }

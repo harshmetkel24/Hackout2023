@@ -33,7 +33,8 @@ function MedicineDetailForm({ formTitle, handleSubmit, close2 }) {
     }
 
   return (
-    <div className='container rounded bg-secondary p-3 w-50'>
+   <div className="container-fluid py-5">
+     <div className='container  rounded bg-secondary p-3' style={{width:"40%"}}>
       <h2 className="text-light text-center">{formTitle}</h2>
         
       {!responseDetail && (<Form onSubmit={async (event) => {
@@ -64,17 +65,18 @@ function MedicineDetailForm({ formTitle, handleSubmit, close2 }) {
           />
         </Form.Group>
             
-        <div>
+        <div className="d-flex justify-content-between">
             <Button variant="primary" type="submit">
                 Submit
             </Button>
-            <Button onClick={()=>close2(false)} variant="danger">
+            <Button onClick={()=>close2(false)} variant="warning">
                 back
             </Button>
         </div>
       </Form>)}
       {/* {responseDetail && } */}
     </div>
+   </div>
   );
 }
 
