@@ -34,7 +34,7 @@ function MedicineDetailForm({ formTitle, handleSubmit, close2 }) {
 
   return (
    <div className="container-fluid py-5">
-     <div className='container  rounded bg-secondary p-3' style={{width:"40%"}}>
+     <div className='container  rounded p-5 shadow' style={{width:"40%", backgroundColor:'#333'}}>
       <h2 className="text-light text-center">{formTitle}</h2>
         
       {!responseDetail && (<Form onSubmit={async (event) => {

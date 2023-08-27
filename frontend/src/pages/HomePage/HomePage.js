@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DetailForm } from "../../components";
+import { DetailForm, Graphs } from "../../components";
 import { getNearestHospitals } from "../../services/api";
 import Table from "react-bootstrap/Table";
 import Carousel from "react-bootstrap/Carousel";
@@ -111,8 +111,8 @@ export default function HomePage() {
             </>
           )}
 
-
         </div>
+        <Graphs />
       </div >
     </>
   );

@@ -6,7 +6,7 @@ function MedicalDetailsResponse({ responseDetail, setResponseDetail }) {
   console.log("here ", responseDetail);
   return (
     <div className="container-fluid py-5">
-      <div className="container" style={{ width: '60%' }}>
+      <div className="container shadow" style={{ width: '60%' }}>
         <Table
           striped
           bordered
