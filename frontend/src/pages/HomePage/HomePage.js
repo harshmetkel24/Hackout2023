@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DetailForm, Graphs } from "../../components";
 import { getNearestHospitals } from "../../services/api";
 import Table from "react-bootstrap/Table";
 import Carousel from "react-bootstrap/Carousel";
+import { UserContext } from "../../UserContext";
+
 
 
 export default function HomePage() {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [hospitals, setHospitals] = useState(null);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     document.title = "Home Page";
@@ -66,11 +69,15 @@ export default function HomePage() {
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center flex-column my-5" style={{ width: '60%' }}>
-          <button className="btn btn-primary" onClick={async (event) => {
-            setHospitals([])
-            setHospitals(await getNearestHospitals(event, { latitude, longitude }))
-            console.log(hospitals)
-          }}>Get Nearest Hopitals</button>
+          {
+            !user && (
+              <button className="btn btn-primary" onClick={async (event) => {
+                setHospitals([])
+                setHospitals(await getNearestHospitals(event, { latitude, longitude }))
+                console.log(hospitals)
+              }}>Get Nearest Hopitals</button>
+            )
+          }
 
           {hospitals && hospitals.length === 0 && (<div className="spinner-border text-primary m-3" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -112,7 +119,11 @@ export default function HomePage() {
           )}
 
         </div>
-        <Graphs />
+        {
+          user && user.role === "Admin" && (
+            <Graphs />
+          ) 
+        }
       </div >
     </>
   );
