@@ -8,14 +8,15 @@ const PMS = express();
 dotenv.config({ path: "config.env" });
 const PORT = process.env.PORT || 8000;
 
-console.log("Developement", process.env.NODE_ENV);
+console.log("NODE ENV", process.env.NODE_ENV);
 connectDB();
 PMS.use(
   cors({
     origin:
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3001"
+      process.env.NODE_ENV.trim() === "development"
+        ? "http://localhost:3000"
         : "https://hackout2023.vercel.app",
+    // origin: "http://localhost:3000",
     credentials: true, // some legacy browsers (IE11, various SmartTVs) choke on 204
   })
 );
